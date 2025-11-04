@@ -9,12 +9,13 @@ RUN apt-get update && apt-get install -y \
 
 # Upgrade pip and install Python packages
 RUN pip install --upgrade pip
-RUN pip install isso gunicorn
+RUN pip install isso gunicorn gevent
 
 WORKDIR /app
 COPY isso.conf /app/
 
 EXPOSE 10000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--worker-class", "gevent", "--workers", "1", "isso.run:application"]
+# Use sync worker as fallback if gevent fails
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--worker-class", "sync", "--workers", "1", "isso.run:application"]
 
