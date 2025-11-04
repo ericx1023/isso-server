@@ -19,6 +19,7 @@ EXPOSE 10000
 # Set environment variable to tell Isso where to find the config
 ENV ISSO_SETTINGS /app/isso.conf
 
-# Use sync worker as fallback if gevent fails  
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--worker-class", "sync", "--workers", "1", "isso.run:application"]
+# Use sync worker as fallback if gevent fails
+# Use PORT environment variable that Render provides
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-10000} --worker-class sync --workers 1 isso.run:application"]
 
