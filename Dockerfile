@@ -12,10 +12,13 @@ RUN pip install --upgrade pip
 RUN pip install isso gunicorn gevent
 
 WORKDIR /app
-COPY isso.conf /app/
+COPY isso.conf /app/isso.conf
 
 EXPOSE 10000
 
-# Use sync worker as fallback if gevent fails
+# Set environment variable to tell Isso where to find the config
+ENV ISSO_SETTINGS /app/isso.conf
+
+# Use sync worker as fallback if gevent fails  
 CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--worker-class", "sync", "--workers", "1", "isso.run:application"]
 
