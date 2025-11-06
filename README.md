@@ -28,6 +28,8 @@ This server is configured to deploy on **Render.com** (free tier).
 - **Admin**: Enabled at `/admin` with password protection
 - **Rate limiting**: Enabled (2 comments per minute)
 - **Anonymous posting**: Enabled
+- **CORS**: Enabled for cross-origin requests (required for delete operations)
+- **Delete permission**: Users can delete their own comments within 15 minutes
 
 ## Admin Access
 
